@@ -48,3 +48,74 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+
+
+import pygame
+import time
+import sys
+
+# Definir títulos
+titles = ["Arte", "Cine"]
+
+# Definir tamaño de botones
+button_width = 165
+button_height = 100
+
+# Definir margen entre botones
+margin = 10
+
+# Inicializar Pygame
+pygame.init()
+
+# Definir el tamaño de la pantalla
+screen_width = 400
+screen_height = 400
+screen = pygame.display.set_mode((screen_width, screen_height))
+
+# Definir posición inicial de la cuadrícula
+x_start = (screen_width - (button_width * 2 + margin)) // 2
+y_start = (screen_height - (button_height + margin)) // 2 + button_height + margin
+
+# Definir color de fondo
+bg_color = (0, 0, 255)
+
+# Dibujar botones y títulos
+font = pygame.font.SysFont(None, 50)
+for i in range(2):
+    button_rect = pygame.Rect(x_start + (button_width + margin) * i, y_start, button_width, button_height)
+    pygame.draw.rect(screen, bg_color, button_rect)
+    title_text = font.render(titles[i], True, (255, 255, 255))
+    title_rect = title_text.get_rect(center=(x_start + (button_width + margin) * i + button_width // 2, y_start + button_height // 2))
+    screen.blit(title_text, title_rect)
+
+# Actualizar pantalla
+pygame.display.update()
+
+# Esperar a que el usuario haga clic en un botón
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_pos = pygame.mouse.get_pos()
+            for i in range(2):
+                button_rect = pygame.Rect(x_start + (button_width + margin) * i, y_start, button_width, button_height)
+                if button_rect.collidepoint(mouse_pos):
+                    if i == 0:
+                        pygame.draw.rect(screen, (0, 255, 0), (0, 0, screen_width, screen_height))
+                        text = font.render("Correcto!", True, (255, 255, 255))
+                        text_rect = text.get_rect(center=(screen_width // 2, screen_height // 2))
+                        screen.blit(text, text_rect)
+                    elif i == 1:
+                        pygame.draw.rect(screen, (255, 0, 0), (0, 0, screen_width, screen_height))
+                        text = font.render("Incorrecto!", True, (255, 255, 255))
+                        text_rect = text.get_rect(center=(screen_width // 2, screen_height // 2))
+                        screen.blit(text, text_rect)
+                    pygame.display.update()
+                    time.sleep(5)
+                    pygame.draw.rect(screen, bg_color, button_rect)
+                    title_text = font.render(titles[i], True, (255, 255, 255))
+                    title_rect = title_text.get_rect(center=(x_start + (button_width + margin) * i + button_width // 2, y_start + button_height // 2))
+                    screen.blit(title_text, title_rect)
+                    pygame.display.update()
