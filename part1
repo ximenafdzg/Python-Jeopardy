@@ -1,0 +1,50 @@
+
+# Botones de respuestas a preguntas
+
+
+import pygame
+import time
+import sys
+
+# Definir títulos
+titles = ["Arte", "Cine"]
+
+# Definir tamaño de botones
+button_width = 165
+button_height = 100
+
+# Definir margen entre botones
+margin = 10
+
+# Inicializar Pygame
+pygame.init()
+
+# Definir el tamaño de la pantalla
+screen_width = 400
+screen_height = 400
+screen = pygame.display.set_mode((screen_width, screen_height))
+
+# Definir posición inicial de la cuadrícula
+x_start = (screen_width - (button_width * 2 + margin)) // 2
+y_start = (screen_height - (button_height + margin)) // 2 + button_height + margin
+
+# Definir color de fondo
+bg_color = (0, 0, 255)
+
+# Dibujar botones y títulos
+font = pygame.font.SysFont(None, 50)
+for i in range(2):
+    button_rect = pygame.Rect(x_start + (button_width + margin) * i, y_start, button_width, button_height)
+    pygame.draw.rect(screen, bg_color, button_rect)
+    title_text = font.render(titles[i], True, (255, 255, 255))
+    title_rect = title_text.get_rect(center=(x_start + (button_width + margin) * i + button_width // 2, y_start + button_height // 2))
+    screen.blit(title_text, title_rect)
+
+# Actualizar pantalla
+pygame.display.update()
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
