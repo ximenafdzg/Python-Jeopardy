@@ -1,4 +1,5 @@
-## Interfaz principal con botones funcionales que redirigen a la pregunta
+## Codigo completo funcional
+
 import pygame
 import time
 import sys
@@ -123,6 +124,28 @@ while True:
 
                         # Actualizar pantalla
                         pygame.display.update()
+
+                        font = pygame.font.SysFont(None, 40)
+                        for i in range(2):
+                            button_rect = pygame.Rect(x_start + (button_width + margin) * i, y_start, button_width, button_height)
+                            if button_rect.collidepoint(mouse_pos):
+                                if i == 0:
+                                    pygame.draw.rect(screen, (0, 255, 0), (0, 0, screen_width, screen_height))
+                                    text = font.render("Correcto!", True, (255, 255, 255))
+                                    text_rect = text.get_rect(center=(screen_width // 2, screen_height // 2))
+                                    screen.blit(text, text_rect)
+                                elif i == 1:
+                                    pygame.draw.rect(screen, (255, 0, 0), (0, 0, screen_width, screen_height))
+                                    text = font.render("Incorrecto!", True, (255, 255, 255))
+                                    text_rect = text.get_rect(center=(screen_width // 2, screen_height // 2))
+                                    screen.blit(text, text_rect)
+                                pygame.display.update()
+                                time.sleep(7)
+                                pygame.draw.rect(screen, bg_color, button_rect)
+                                title_text = font.render(titles2[i], True, (255, 255, 255))
+                                title_rect = title_text.get_rect(center=(x_start + (button_width + margin) * i + button_width // 2, y_start + button_height // 2))
+                                screen.blit(title_text, title_rect)
+                                pygame.display.update()
 
                         # Draw question in white font at the top of the screen
                         font = pygame.font.SysFont(None, 35)
