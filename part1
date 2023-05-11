@@ -119,3 +119,68 @@ while True:
                     title_rect = title_text.get_rect(center=(x_start + (button_width + margin) * i + button_width // 2, y_start + button_height // 2))
                     screen.blit(title_text, title_rect)
                     pygame.display.update()
+# interfaz principal de botones de puntaje y categorias
+
+import pygame
+import time
+import sys
+
+# Inicializar Pygame
+pygame.init()
+
+# Definir dimensiones de la pantalla
+screen_width = 400
+screen_height = 400
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption("Jeopardy")
+
+# Definir colores
+background_color = (0, 0, 255)
+button_color = (0, 0, 255)
+
+# Definir fuente
+font = pygame.font.SysFont("Arial", 20)
+
+# Definir títulos
+titles = ["Arte", "Cine", "Geografía", "Música"]
+
+# Definir valores de las preguntas
+values = [[100, 100, 100, 100], 
+          [150, 150, 150, 150], 
+          [300, 300, 300, 300], 
+          [400, 400, 400, 400]]
+
+# Definir tamaño de botones
+button_width = 80
+button_height = 80
+
+# Definir margen entre botones
+margin = 10
+
+# Definir posición inicial de la cuadrícula
+x_start = (screen_width - (button_width * 4 + margin * 3)) // 2
+y_start = (screen_height - (button_height * 4 + margin * 3)) // 2
+
+# Dibujar botones, títulos y valores de las preguntas
+for i in range(4):
+    for j in range(4):
+        button_rect = pygame.Rect(x_start + (button_width + margin) * i, y_start + (button_height + margin) * j, button_width, button_height)
+        pygame.draw.rect(screen, button_color, button_rect)
+        if j == 0:
+            title_text = font.render(titles[i], True, (255, 255, 255))
+            title_rect = title_text.get_rect(center=(x_start + (button_width + margin) * i + button_width // 2, y_start))
+            screen.blit(title_text, title_rect)
+        value_text = font.render(str(values[j][i]), True, (255, 255, 255))
+        value_rect = value_text.get_rect(center=(x_start + (button_width + margin) * i + button_width // 2, y_start + (button_height + margin) * j + button_height - 15))
+        screen.blit(value_text, value_rect)
+
+# Actualizar pantalla
+pygame.display.update()
+
+
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
